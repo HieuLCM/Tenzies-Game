@@ -4,7 +4,7 @@
 
 The link to the App is :
 
-# The thing that should be improved:
+# The things that should be improved:
 
 - Track time
 - Track number of rolls
