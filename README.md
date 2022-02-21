@@ -7,6 +7,4 @@ The link to the App is : "tenzies-game-hieulcm.netlify.app"
 # The things that should be improved:
 
 - Track time
-- Track number of rolls
-- Store the best score in the localStorage
 - Put real dots on the dices

@@ -9,14 +9,24 @@ export default function App() {
     const [allDice, setAllDice] = useState(allNewDice())
     const [tenzies, setTenzies] = useState(false)
     const [size, setSize] = useState({width: window.innerWidth, height: window.innerHeight})
+    const [numberRoll, setNumberRoll] = useState(0)
+    const [isBest, setIsBest] = useState(false)
+
+    if (!localStorage.getItem("best")) {localStorage.setItem("best", 100)}
+
     useEffect(() => {
         const allHeld = allDice.every(dice => dice.isHeld)
         const firstValue = allDice[0].value
         const sameValue = allDice.every(dice => dice.value === firstValue)
+
         if (allHeld && sameValue) {
             setTenzies(true)
+            if (numberRoll <= localStorage.getItem("best")) {
+                localStorage.setItem("best", numberRoll)
+                setIsBest(true)
+            }
         }
-    }, [allDice])
+    }, [numberRoll,allDice])
 
     useEffect(() => {
         function resetSize() {
@@ -49,9 +59,12 @@ export default function App() {
             setAllDice(prevAllDice => prevAllDice.map(dice => (
                 dice.isHeld ? dice : generateNewDice()
             )))
+            setNumberRoll(prevNum => prevNum +1)
         } else {
             setTenzies(false)
             setAllDice(allNewDice())
+            setNumberRoll(0)
+            setIsBest(false)
         } 
     }
 
@@ -74,7 +87,10 @@ export default function App() {
             <div className="dice-container">
                 {diceElements}
             </div>
+            {tenzies && <div className="congrat">CONGRATULATIONS</div>}
             <button className="roll-dice" onClick={rollDice}>{tenzies ? "New Game": "Roll"}</button>
+            {tenzies ? <span className="bestscore">{isBest ? "Best Score" : `You Won After ${numberRoll} Rolls`}</span> :
+                <span className="roll-num">{numberRoll}</span> }
         </main>
     )
 }
