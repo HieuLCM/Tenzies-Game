@@ -15,11 +15,10 @@ export default function App() {
     if (!localStorage.getItem("best")) {localStorage.setItem("best", 100)}
 
     useEffect(() => {
-        const allHeld = allDice.every(dice => dice.isHeld)
         const firstValue = allDice[0].value
         const sameValue = allDice.every(dice => dice.value === firstValue)
 
-        if (allHeld && sameValue) {
+        if (sameValue) {
             setTenzies(true)
             if (numberRoll <= localStorage.getItem("best")) {
                 localStorage.setItem("best", numberRoll)
